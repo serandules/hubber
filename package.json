@@ -1,0 +1,17 @@
+{
+    "name": "hubber",
+    "description": "hubber",
+    "version": "0.0.0",
+    "author": {
+        "name": "serandives",
+        "email": "serandives@gmail.com"
+    },
+    "dependencies": {
+        "node-uuid": "*",
+        "rimraf": "2.2.8"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/serandules/hubber.git"
+    }
+}
