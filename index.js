@@ -30,7 +30,7 @@ var start = function (dir, repo) {
     child.on('close', function () {
         console.log('server starting');
         if (server) {
-            server.kill('SIGINT');
+            server.kill('SIGKILL');
             console.log('old server killed');
         }
         var cwd = dir + '/' + id;
