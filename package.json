@@ -7,8 +7,10 @@
         "email": "serandives@gmail.com"
     },
     "dependencies": {
+        "debug": "*",
         "node-uuid": "*",
-        "rimraf": "2.2.8"
+        "rimraf": "2.2.8",
+        "utils": "serandules/utils#master"
     },
     "repository": {
         "type": "git",

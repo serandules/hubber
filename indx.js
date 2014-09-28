@@ -38,11 +38,9 @@ var repo = hub ? 'https://github.com/serandules/hub.git' : 'https://github.com/s
  */
 var start = function (restart) {
     //cleaning hub directory to ensure fresh installation
-    if (utils.prod()) {
-        rimraf.sync(hubDir);
-        fs.mkdirSync(hubDir);
-        debug('hub directory cleaned');
-    }
+    rimraf.sync(hubDir);
+    fs.mkdirSync(hubDir);
+    debug('hub directory cleaned');
 
     var child = spawn('bash');
     child.stdout.pipe(process.stdout);
@@ -50,7 +48,7 @@ var start = function (restart) {
     debug('sh > cd %s', hubDir);
     child.stdin.write('cd ' + hubDir + '\n');
 
-    var id, path;
+    var id;
     if (utils.prod()) {
         //repo is cloned in production mode
         id = uuid.v4();
@@ -59,11 +57,8 @@ var start = function (restart) {
     } else {
         //repo is symblinked in non-production mode
         id = hub ? 'hub' : 'hub-client';
-        path = hubDir + '/' + id + '/node_modules';
         debug('symblinking repo : ' + repo);
-        child.stdin.write('cp -rf ' + utils.locals() + '/serandules/' + id + ' .\n');
-        child.stdin.write('mkdir -p ' + path + '\n');
-        child.stdin.write(utils.cmdln(utils.locals() + '/serandules', path) + '\n');
+        child.stdin.write(utils.cmdln(utils.locals() + '/serandules', hubDir + '/' + id + '/node_modules') + '\n');
     }
 
     child.stdin.write('cd ' + id + '\n');
