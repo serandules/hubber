@@ -38,7 +38,8 @@ var repo = hub ? 'https://github.com/serandules/hub.git' : 'https://github.com/s
  */
 var start = function (restart) {
     //cleaning hub directory to ensure fresh installation
-    if (utils.prod()) {
+    var prod = utils.prod();
+    if (prod) {
         rimraf.sync(hubDir);
         fs.mkdirSync(hubDir);
         debug('hub directory cleaned');
@@ -51,7 +52,7 @@ var start = function (restart) {
     child.stdin.write('cd ' + hubDir + '\n');
 
     var id, path;
-    if (utils.prod()) {
+    if (prod) {
         //repo is cloned in production mode
         id = uuid.v4();
         debug('cloning repo : ' + repo);
@@ -67,7 +68,9 @@ var start = function (restart) {
     }
 
     child.stdin.write('cd ' + id + '\n');
-    child.stdin.write('npm install\n');
+    if (prod) {
+        child.stdin.write('npm install\n');
+    }
     if (hub) {
         child.stdin.write('component install\n');
     }
