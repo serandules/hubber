@@ -57,6 +57,11 @@ var start = function (restart) {
         id = uuid.v4();
         debug('cloning repo : ' + repo);
         child.stdin.write('git clone ' + repo + ' ' + id + '\n');
+        child.stdin.write('cd ' + id + '\n');
+        child.stdin.write('npm install\n');
+        if (hub) {
+            child.stdin.write('component install\n');
+        }
     } else {
         //repo is symblinked in non-production mode
         id = hub ? 'hub' : 'hub-client';
@@ -65,14 +70,15 @@ var start = function (restart) {
         child.stdin.write('cp -rf ' + utils.locals() + '/serandules/' + id + ' .\n');
         child.stdin.write('mkdir -p ' + path + '\n');
         child.stdin.write(utils.cmdln(utils.locals() + '/serandules', path) + '\n');
-    }
-
-    child.stdin.write('cd ' + id + '\n');
-    if (prod) {
-        child.stdin.write('npm install\n');
-    }
-    if (hub) {
-        child.stdin.write('component install\n');
+        child.stdin.write('cd ' + id + '\n');
+        if (hub) {
+            //repo is symblinked in non-production mode
+            path = hubDir + '/' + id + '/components';
+            debug('symblinking repo : ' + repo);
+            child.stdin.write('cp -rf ' + utils.locals() + '/serandomps/' + id + ' .\n');
+            child.stdin.write('mkdir -p ' + path + '\n');
+            child.stdin.write(utils.cmdln(utils.locals() + '/serandomps', path, 'serandomps-') + '\n');
+        }
     }
     child.stdin.write('echo "repo : ' + repo + ' cloned/symblinked"\n');
     //stopping helper process
