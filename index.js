@@ -23,7 +23,7 @@ debug('executing as a hub : %s', hub);
  * ENV variable to change the directory where hub and hub-client are installed
  * @type {*|string}
  */
-var hubDir = process.env.HUB_DIR || '/Users/ruchira/serandives/servers';
+var hubDir = process.env.HUB_DIR || '~/serandives/servers';
 debug('hub directory : %s', hubDir);
 
 /**
