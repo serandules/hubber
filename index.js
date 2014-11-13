@@ -59,6 +59,7 @@ var start = function (restart) {
         child.stdin.write('git clone ' + repo + ' ' + id + '\n');
         child.stdin.write('cd ' + id + '\n');
         child.stdin.write('npm install\n');
+        child.stdin.write('force-dedupe-git-modules\n');
         if (hub) {
             child.stdin.write('component install\n');
         }
