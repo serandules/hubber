@@ -23,8 +23,10 @@ debug('executing as a hub : %s', hub);
  * ENV variable to change the directory where hub and hub-client are installed
  * @type {*|string}
  */
-var hubDir = process.env.HUB_DIR || '/tmp/serandives/hub';
+var hubDir = process.env.HUB_DIR || '/tmp/serandives';
 debug('hub directory : %s', hubDir);
+
+var cwd;
 
 /**
  * hub repository url
@@ -51,10 +53,11 @@ var start = function (restart) {
     debug('sh > cd %s', hubDir);
     child.stdin.write('cd ' + hubDir + '\n');
 
-    var id, path;
+    var id;
     if (prod) {
         //repo is cloned in production mode
         id = uuid.v4();
+        cwd = hubDir + '/' + id;
         debug('cloning repo : ' + repo);
         child.stdin.write('git clone ' + repo + ' ' + id + '\n');
         child.stdin.write('cd ' + id + '\n');
@@ -66,19 +69,18 @@ var start = function (restart) {
     } else {
         //repo is symblinked in non-production mode
         id = hub ? 'hub' : 'hub-client';
-        path = hubDir + '/' + id + '/node_modules';
+        cwd = hubDir + '/' + id;
         debug('symblinking repo : ' + repo);
-        child.stdin.write('cp -rf ' + utils.locals() + '/serandules/' + id + ' .\n');
-        child.stdin.write('mkdir -p ' + path + '\n');
-        child.stdin.write(utils.cmdln(utils.locals() + '/serandules', path) + '\n');
+        child.stdin.write('cp -rf ' + utils.locals() + '/serandules/' + id + ' .\n'); //TODO: make symblink
+        child.stdin.write('mkdir -p ' + id + '/node_modules\n');
+        child.stdin.write(utils.cmdln(utils.locals() + '/serandules', cwd + '/node_modules') + '\n');
         child.stdin.write('cd ' + id + '\n');
         if (hub) {
             //repo is symblinked in non-production mode
-            path = hubDir + '/' + id + '/components';
             debug('symblinking repo : ' + repo);
             child.stdin.write('cp -rf ' + utils.locals() + '/serandomps/' + id + ' .\n');
-            child.stdin.write('mkdir -p ' + path + '\n');
-            child.stdin.write(utils.cmdln(utils.locals() + '/serandomps', path, 'serandomps-') + '\n');
+            child.stdin.write('mkdir -p ' + id + '/components\n');
+            child.stdin.write(utils.cmdln(utils.locals() + '/serandomps', cwd + '/components', 'serandomps-') + '\n');
         }
     }
     child.stdin.write('echo "repo : ' + repo + ' cloned/symblinked"\n');
@@ -90,7 +92,6 @@ var start = function (restart) {
             server.kill('SIGKILL');
             debug('old hub instance stopped');
         }
-        var cwd = hubDir + '/' + id;
         server = fork(cwd + '/index.js', {
             cwd: cwd,
             silent: true
