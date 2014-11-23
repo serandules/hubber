@@ -10,7 +10,15 @@ var spawn = require('child_process').spawn;
 var fork = require('child_process').fork;
 var utils = require('utils');
 
+/**
+ * existing server instance
+ */
 var server;
+
+/**
+ * current directory i.e. hub or hub-client dir
+ */
+var cwd;
 
 /**
  * whether this particular instance is a hub or hub-client
@@ -23,10 +31,13 @@ debug('executing as a hub : %s', hub);
  * ENV variable to change the directory where hub and hub-client are installed
  * @type {*|string}
  */
-var hubDir = process.env.HUB_DIR || '/tmp/serandives';
+var hubDir = process.env.HUB_DIR || '/tmp/serandives/servers';
 debug('hub directory : %s', hubDir);
 
-var cwd;
+/**
+ * whether production or not
+ */
+var prod = utils.prod();
 
 /**
  * hub repository url
@@ -40,7 +51,6 @@ var repo = hub ? 'https://github.com/serandules/hub.git' : 'https://github.com/s
  */
 var start = function (restart) {
     //cleaning hub directory to ensure fresh installation
-    var prod = utils.prod();
     if (prod) {
         rimraf.sync(hubDir);
         fs.mkdirSync(hubDir);
