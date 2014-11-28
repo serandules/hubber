@@ -102,7 +102,8 @@ var start = function (restart) {
             server.kill('SIGKILL');
             debug('old hub instance stopped');
         }
-        server = fork(cwd + '/index.js', {
+        var argv = restart ? ['restart'] : [];
+        server = fork(cwd + '/index.js', argv, {
             cwd: cwd,
             silent: true
         });
