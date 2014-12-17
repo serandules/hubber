@@ -1,5 +1,5 @@
 #!/bin/sh
-export CLIENT_TOKEN=abcdef
+export CLIENT_TOKEN=ruchira
 export NODE_ENV=development
 
 export HUB_DIR=/Users/ruchira/serandives/servers
