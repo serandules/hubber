@@ -82,14 +82,15 @@ var start = function (restart) {
         cwd = hubDir + '/' + id;
         debug('symblinking repo : ' + repo);
         child.stdin.write('cp -rf ' + utils.locals() + '/serandules/' + id + ' .\n'); //TODO: make symblink
+        //child.stdin.write(utils.cmdclnln(id) + '\n');
         child.stdin.write('mkdir -p ' + id + '/node_modules\n');
         child.stdin.write(utils.cmdln(utils.locals() + '/serandules', cwd + '/node_modules') + '\n');
         child.stdin.write('cd ' + id + '\n');
         if (hub) {
             //repo is symblinked in non-production mode
             debug('symblinking repo : ' + repo);
-            child.stdin.write('cp -rf ' + utils.locals() + '/serandomps/' + id + ' .\n');
-            child.stdin.write('mkdir -p ' + id + '/components\n');
+            child.stdin.write('mkdir components\n');
+            child.stdin.write('cp -rf ' + utils.locals() + '/visionmedia-page.js' + ' .\n');
             child.stdin.write(utils.cmdln(utils.locals() + '/serandomps', cwd + '/components', 'serandomps-') + '\n');
         }
     }
