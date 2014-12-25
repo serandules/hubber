@@ -90,7 +90,8 @@ var start = function (restart) {
             //repo is symblinked in non-production mode
             debug('symblinking repo : ' + repo);
             child.stdin.write('mkdir components\n');
-            child.stdin.write('cp -rf ' + utils.locals() + '/visionmedia-page.js' + ' .\n');
+            child.stdin.write('cp -rf ' + utils.locals() + '/visionmedia-page.js' + ' components/\n');
+            child.stdin.write('cp -rf ' + utils.locals() + '/node-querystring' + ' components/visionmedia-node-querystring\n');
             child.stdin.write(utils.cmdln(utils.locals() + '/serandomps', cwd + '/components', 'serandomps-') + '\n');
         }
     }
