@@ -11,6 +11,12 @@ var fork = require('child_process').fork;
 var utils = require('utils');
 
 /**
+ * whether an update is being executed
+ * @type {boolean}
+ */
+var pending = false;
+
+/**
  * existing server instance
  */
 var server;
@@ -115,7 +121,21 @@ var start = function (restart) {
             debug('hubber:message %s', data.event);
             switch (data.event) {
                 case 'self up':
+                    if (pending) {
+                        debug('skipping concurrent hub or hub-client update request');
+                        return;
+                    }
+                    pending = true;
                     start(true);
+                    break;
+                case 'hub started':
+                case 'hub-client started':
+                    pending = false;
+                    break;
+                case 'hub stopped':
+                case 'hub-client stopped':
+                    debug('hub or hub-client update failed');
+                    pending = false;
                     break;
             }
         });
