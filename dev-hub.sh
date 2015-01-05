@@ -9,4 +9,4 @@ export LOCAL_REPO=/Users/ruchira/sources/github
 #hub
 export HUB=true
 clear
-node index.js
+node index.js > hub.log &
