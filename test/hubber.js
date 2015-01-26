@@ -23,15 +23,16 @@ describe('hubber', function () {
     });
     describe('#start()', function () {
         this.timeout(5 * 1000);
-        it('server should get started up', function (done) {
-            hubber.start(repo, function (err, id, port, pid) {
+        it('server should get started/stopped', function (done) {
+            hubber.start(repo, function (err, id, pid, address) {
                 if (err) {
                     return done(err);
                 }
                 id.should.be.type('string');
-                port.should.be.type('number');
                 pid.should.be.type('number');
-                http.get('http://localhost:' + port + '/', function (res) {
+                address.port.should.be.type('number');
+                address.address.should.be.type('string');
+                http.get('http://localhost:' + address.port + '/', function (res) {
                     res.statusCode.should.equal(200);
                     hubber.stop(id, function (err) {
                         Boolean(err).should.be.false;
