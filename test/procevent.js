@@ -1,4 +1,5 @@
 var log = require('logger')('test:procevent');
+var procevent = require('procevent');
 var child_process = require('child_process');
 var fork = child_process.fork;
 
@@ -18,7 +19,6 @@ describe('procevent', function () {
     });
     describe('#emit()', function () {
         it('should return data array', function (done) {
-            var procevent = require('../lib/procevent');
             var pa = procevent(parent);
             pa.on('hui', function (a, b) {
                 a.should.equal('family');
