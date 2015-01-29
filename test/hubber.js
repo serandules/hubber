@@ -23,21 +23,35 @@ describe('hubber', function () {
     });
     describe('#start()', function () {
         this.timeout(5 * 1000);
-        it('server should get started/stopped', function (done) {
-            hubber.start(repo, function (err, id, pid, address) {
+        it('server should get started/restarted/stopped', function (done) {
+            hubber.start(repo, function (err, id0, pid, address) {
                 if (err) {
                     return done(err);
                 }
-                id.should.be.type('string');
+                id0.should.be.type('string');
                 pid.should.be.type('number');
                 address.port.should.be.type('number');
                 address.address.should.be.type('string');
                 http.get('http://localhost:' + address.port + '/', function (res) {
                     res.statusCode.should.equal(200);
-                    hubber.stop(id, function (err) {
-                        Boolean(err).should.be.false;
+                    hubber.restart(id0, function (err, id1, pid, address) {
+                        id0.should.equal(id1);
+                        pid.should.be.type('number');
+                        address.port.should.be.type('number');
+                        address.address.should.be.type('string');
+                        http.get('http://localhost:' + address.port + '/', function (res) {
+                            res.statusCode.should.equal(200);
+                            hubber.stop(id1, function (err) {
+                                if (err) {
+                                    return done(err);
+                                }
+                                Boolean(err).should.be.false;
+                                done();
+                            });
+                        }).on('error', function (e) {
+                            done(e);
+                        });
                     });
-                    done();
                 }).on('error', function (e) {
                     done(e);
                 });
