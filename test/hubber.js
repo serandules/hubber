@@ -9,22 +9,26 @@ var fork = child_process.fork;
 require('should');
 
 var hubber = require('../lib/hubber');
+var agent = require('hub-agent');
 
 describe('hubber', function () {
     var repo = 'https://github.com/serandules/sandbox.git';
     var parent = '/tmp/serandives/drones';
+
     before(function () {
         if (!fs.existsSync(parent)) {
             mkdirp.sync(parent);
         }
     });
+
     after(function () {
         rimraf.sync(parent);
     });
-    describe('#start()', function () {
+
+    /*describe('#start|restart|stop()', function () {
         this.timeout(5 * 1000);
         it('server should get started/restarted/stopped', function (done) {
-            hubber.start(repo, function (err, id0, pid, address) {
+            hubber.start(repo, 'index.js', function (err, id0, pid, address) {
                 if (err) {
                     return done(err);
                 }
@@ -55,6 +59,32 @@ describe('hubber', function () {
                 }).on('error', function (e) {
                     done(e);
                 });
+            });
+        });
+    });*/
+
+    describe('#hub-agent', function () {
+        this.timeout(50 * 1000);
+        it('should execute done with response', function (done) {
+            hubber.start(repo, 'hub.js', function (err, id, pid, address) {
+                if (err) {
+                    return done(err);
+                }
+                /*var hub = agent.hub();
+                setTimeout(function() {
+                    hub.emiton('config', 'ruchira', 'wageesha', function (err, p1, p2) {
+                        p1.should.equal('ruchira');
+                        p2.should.equal('wageesha');
+                        hubber.stop(id, function (err) {
+                            done(err);
+                        });
+                    });
+                }, 5000);*/
+            });
+            hubber.start(repo, 'drone.js', function (err, id, pid, address) {
+                if (err) {
+                    return done(err);
+                }
             });
         });
     });
