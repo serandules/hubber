@@ -2,7 +2,7 @@ var log = require('logger')('hubber');
 var hubber = require('./lib/hubber');
 
 var hub = process.env.HUB === 'true';
-hub = true;
+//hub = true;
 var mode = hub ? 'hub' : 'hub-client';
 log.info('hubber mode : %s', mode);
 
