@@ -18,7 +18,7 @@ describe('dev', function () {
             rimraf.sync(parent);
         });
         it('should setup without error', function (done) {
-            var dev = require('../lib/dev');
+            var dev = require('../../hub-agent/lib/dev');
             var repo = 'https://github.com/serandules/hubber.git';
             dev.setup(parent, repo, function (err, id, dir) {
                 if (err) {

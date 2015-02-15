@@ -8,7 +8,7 @@ var fork = child_process.fork;
 
 require('should');
 
-var hubber = require('../lib/hubber');
+var hubber = require('../../hub-agent/lib/hubber');
 var agent = require('hub-agent');
 
 describe('hubber', function () {
