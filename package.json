@@ -1,23 +1,8 @@
 {
     "name": "hubber",
-    "description": "hubber",
-    "version": "0.0.0",
-    "author": {
-        "name": "serandives",
-        "email": "serandives@gmail.com"
-    },
     "dependencies": {
-        "debug": "*",
-        "node-uuid": "*",
-        "rimraf": "2.2.8",
-        "mkdirp": "*",
-        "should": "*",
+        "node-uuid": "1.4.2",
         "logger": "serandules/logger#master",
-        "procevent": "serandules/procevent#master",
-        "utils": "serandules/utils#master"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/serandules/hubber.git"
+        "procevent": "serandules/procevent#master"
     }
 }
