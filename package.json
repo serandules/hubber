@@ -3,6 +3,7 @@
     "dependencies": {
         "node-uuid": "1.4.2",
         "logger": "serandules/logger#master",
+        "droner": "serandules/droner#master",
         "procevent": "serandules/procevent#master"
     }
 }
