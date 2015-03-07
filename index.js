@@ -15,21 +15,25 @@ log.info('hubber mode : %s', mode);
 
 var id = uuid.v4();
 
-var run = function (process, address) {
+var run = function (id, repo, main, process, address) {
     drone = procevent(process);
     drone.on('up', function () {
         log.info('self up request drone:%s mode:%s', id, mode);
-        droner.restart(id, function (err, process, address) {
+        droner.stop(id, function () {
             drone.destroy();
-            run(process, address);
+            droner.start(id, repo, main, function (err, process, address) {
+                run(id, repo, main, process, address);
+            });
         });
     });
     log.info('drone started | mode:%s, pid:%s, address:%s', mode, process.pid, address);
 };
 
-droner.start(id, repo, 'index.js', function (err, process, address) {
+var main = 'index.js';
+
+droner.start(id, repo, main, function (err, process, address) {
     if (err) {
         return log.error('drone startup error | mode:%s, error:%s', mode, err);
     }
-    run(process, address);
+    run(id, repo, main, process, address);
 });
