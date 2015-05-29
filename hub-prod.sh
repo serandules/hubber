@@ -8,4 +8,4 @@ export PATH=$NODE_HOME/bin:$PATH
 
 #rm -rf $DRONES_DIR/*
 
-node index.js
+node index.js &
