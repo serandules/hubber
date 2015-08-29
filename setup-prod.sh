@@ -1,8 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #install nodejs
 #install mongodb
 #install git
+#install sharp dependencies
 
 
 #install make
@@ -29,6 +30,8 @@ npm install -g serve-favicon
 npm install -g socket.io
 npm install -g socket.io-client
 npm install -g string-to-js
+npm install -g sharp
+npm install -g component-build
 
 
 

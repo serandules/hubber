@@ -1,10 +1,11 @@
 #!/bin/sh
 
+export SU_PASS=ruchira
 export PRODUCTION=true
 export HUB=true
-export DRONES_DIR=/tmp/serandives/drones
-export NODE_PATH=$NODE_HOME/lib/node_modules
+export DRONES_DIR=/opt/serandives/drones
 export PATH=$NODE_HOME/bin:$PATH
+export NODE_PATH=$NODE_HOME/lib/node_modules
 
 #rm -rf $DRONES_DIR/*
 
