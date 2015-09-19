@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LOCAL_REPO=/home/ruchiraw/sources/serandives
+# LOCAL_REPO=/home/ruchiraw/sources/serandives
 
 cd LOCAL_REPO
 

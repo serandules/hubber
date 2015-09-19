@@ -2,7 +2,7 @@
 
 export SU_PASS=ruchira
 export HUB=true
-export LOCAL_REPO=/home/ruchiraw/sources/serandives
+# export LOCAL_REPO=/home/ruchiraw/sources/serandives
 export DRONES_DIR=/opt/serandives/drones
 export PATH=$NODE_HOME/bin:$PATH
 export NODE_PATH=$NODE_HOME/lib/node_modules
