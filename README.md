@@ -18,3 +18,16 @@ sudo sysctl -w kern.ipc.somaxconn=2048
 OS X check sockets
 -----------------
 sysctl -a | grep somax
+
+
+
+user.permissions {
+
+}
+
+user.permitted = {
+    read: {
+        groups: [],
+        users: []
+    }
+}
